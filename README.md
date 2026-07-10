@@ -14,3 +14,6 @@ Licencia
 
 El HTML miralo, aprendé, copiá lo que te sirva — para eso está a la vista.
 El logo, el nombre y la marca son nuestros. No seas esa persona.
+
+Desde una cueva de Red City, salute. 
+
