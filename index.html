@@ -33,10 +33,31 @@
   nav ul a:hover{color:var(--fg);text-decoration:none}
 
   .hero{padding:110px 0 90px;border-bottom:1px solid var(--line)}
+  .hero .wrap{display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:center}
+  .hero-viz svg{width:100%;height:auto;display:block}
+  .viz-status{font-family:var(--mono);font-size:.72rem;color:var(--dim);margin-top:12px;min-height:1.2em}
+  .viz-status .ok{color:var(--accent)}
+  .viz-status .warn{color:#e0a552}
+  .rack-marco{fill:none;stroke:#3a4150;stroke-width:2}
+  .srv{cursor:pointer}
+  .srv .cuerpo{fill:var(--bg2);stroke:#2a3040;stroke-width:1.5;transition:fill .3s}
+  .srv text{font-family:var(--mono);font-size:10px;fill:var(--dim);user-select:none}
+  .srv .bahia{fill:none;stroke:#232833;stroke-width:1.5}
+  .srv.caido .cuerpo{fill:#0a0c10}
+  .srv.caido text{fill:#3d4452}
+  .led{fill:var(--accent)}
+  .led.parp{animation:parp 1.3s steps(1) infinite}
+  .led.rapido{animation-duration:.28s}
+  .led.rojo{fill:#b04a4a;animation:none}
+  .led.apagado{fill:#242a36;animation:none}
+  @keyframes parp{0%,55%{opacity:1}56%,100%{opacity:.12}}
+  @media(max-width:900px){
+    .hero .wrap{grid-template-columns:1fr}
+    .hero-viz{display:none}
+  }
   .hero .tag{font-family:var(--mono);color:var(--accent);font-size:.85rem;margin-bottom:18px}
   .hero h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;font-weight:700;max-width:680px}
   .hero p{color:var(--dim);margin-top:22px;max-width:600px;font-size:1.08rem}
-  .hero .creds{font-family:var(--mono);font-size:.78rem;color:var(--dim);margin-top:26px;max-width:620px;line-height:1.8}
   .hero .cta{display:inline-block;margin-top:36px;font-family:var(--mono);font-size:.95rem;border:1px solid var(--accent);padding:12px 26px;border-radius:4px}
   .hero .cta:hover{background:var(--accent);color:var(--bg);text-decoration:none}
 
@@ -115,11 +136,16 @@
 <main>
   <div class="hero">
     <div class="wrap">
-      <div class="tag">// infraestructura &amp; desarrollo</div>
-      <h1>Sistemas que funcionan cuando nadie los está mirando.</h1>
-      <p>1149 es una empresa de servicios tecnológicos: infraestructura, conectividad, seguridad electrónica y desarrollo a medida. Trabajamos con empresas de todo el país.</p>
-      <div class="creds">más de diez años en redes e infraestructura · cientos de equipos en producción</div>
-      <a class="cta" href="#contacto">escribinos →</a>
+      <div>
+        <div class="tag">// infraestructura &amp; desarrollo</div>
+        <h1>Sistemas que funcionan cuando nadie los está mirando.</h1>
+        <p>1149 es una empresa de servicios tecnológicos: infraestructura, conectividad, seguridad electrónica y desarrollo a medida. Trabajamos con empresas de todo el país.</p>
+        <a class="cta" href="#contacto">escribinos →</a>
+      </div>
+      <div class="hero-viz" aria-hidden="true">
+        <svg id="rack" viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="viz-status" id="netstatus"><span class="ok">● clúster operativo</span> — apagá un servidor con un click</div>
+      </div>
     </div>
   </div>
 
@@ -269,6 +295,93 @@ if (new URLSearchParams(location.search).has('enviado')) {
   const f = document.getElementById('f');
   f.innerHTML = '<p style="color:var(--fg)">Mensaje enviado. Te respondemos a la brevedad.</p>';
 }
+
+// rack interactivo del hero
+(function(){
+  const svg = document.getElementById('rack');
+  if (!svg) return;
+  const ns = 'http://www.w3.org/2000/svg';
+  const status = document.getElementById('netstatus');
+  const DEFECTO = '<span class="ok">● clúster operativo</span> — apagá un servidor con un click';
+  let avisos = [];
+  function decir(html, ms){
+    avisos.push(setTimeout(() => { status.innerHTML = html; }, ms));
+  }
+  function limpiarAvisos(){ avisos.forEach(clearTimeout); avisos = []; }
+
+  const marco = document.createElementNS(ns,'rect');
+  marco.setAttribute('x',60); marco.setAttribute('y',12);
+  marco.setAttribute('width',280); marco.setAttribute('height',336);
+  marco.setAttribute('rx',6); marco.setAttribute('class','rack-marco');
+  svg.appendChild(marco);
+  for (let lado of [70,330]) for (let i=0;i<11;i++){
+    const h = document.createElementNS(ns,'rect');
+    h.setAttribute('x',lado-2); h.setAttribute('y',24+i*30);
+    h.setAttribute('width',4); h.setAttribute('height',8);
+    h.setAttribute('fill','#232833');
+    svg.appendChild(h);
+  }
+
+  const servidores = [];
+  for (let i=0;i<6;i++){
+    const y = 26 + i*46;
+    const g = document.createElementNS(ns,'g');
+    g.setAttribute('class','srv');
+    g.innerHTML =
+      '<rect class="cuerpo" x="82" y="'+y+'" width="236" height="38" rx="3"/>' +
+      '<text x="94" y="'+(y+24)+'">srv-0'+(i+1)+'</text>' +
+      '<rect class="bahia" x="160" y="'+(y+9)+'" width="52" height="8"/>' +
+      '<rect class="bahia" x="160" y="'+(y+21)+'" width="52" height="8"/>' +
+      '<rect class="bahia" x="222" y="'+(y+9)+'" width="52" height="8"/>' +
+      '<rect class="bahia" x="222" y="'+(y+21)+'" width="52" height="8"/>' +
+      '<circle class="led poder" cx="292" cy="'+(y+19)+'" r="3.4"/>' +
+      '<circle class="led parp act" cx="306" cy="'+(y+19)+'" r="3.4"/>';
+    svg.appendChild(g);
+    const act = g.querySelector('.act');
+    act.style.animationDelay = (-Math.random()*1.3).toFixed(2)+'s';
+    servidores.push({g, caido:false, ocupado:false});
+  }
+
+  const activos = () => servidores.filter(s => !s.caido);
+
+  servidores.forEach((s, i) => {
+    s.g.addEventListener('click', () => {
+      if (s.caido || s.ocupado) return;
+      if (activos().length <= 2) {
+        limpiarAvisos();
+        status.innerHTML = '<span class="warn">● capacidad mínima del clúster</span> — pedido rechazado';
+        decir(DEFECTO, 2200);
+        return;
+      }
+      s.caido = true; s.ocupado = true;
+      s.g.classList.add('caido');
+      s.g.querySelector('.poder').classList.add('rojo');
+      s.g.querySelector('.act').classList.add('apagado');
+
+      const receptor = azar(activos());
+      const ledR = receptor.g.querySelector('.act');
+      ledR.classList.add('rapido');
+      const nombre = 'srv-0'+(i+1);
+      const nombreR = 'srv-0'+(servidores.indexOf(receptor)+1);
+
+      limpiarAvisos();
+      status.innerHTML = '<span class="warn">● '+nombre+' fuera de línea</span> — migrando servicios…';
+      decir('<span class="ok">● servicios migrados a '+nombreR+'</span> — sin corte percibido', 1100);
+      decir('<span class="ok">● '+nombre+' reincorporado</span> — carga rebalanceada', 4600);
+      decir(DEFECTO, 7000);
+
+      setTimeout(() => {
+        s.caido = false; s.ocupado = false;
+        s.g.classList.remove('caido');
+        s.g.querySelector('.poder').classList.remove('rojo');
+        s.g.querySelector('.act').classList.remove('apagado');
+        ledR.classList.remove('rapido');
+      }, 4600);
+    });
+  });
+
+  function azar(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+})();
 </script>
 
 </body>
