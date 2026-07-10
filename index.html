@@ -8,8 +8,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1149 — Infraestructura y desarrollo</title>
-<meta name="description" content="Infraestructura gestionada, redes, seguridad electrónica y herramientas a medida sobre tu sistema de gestión. Remoto, toda Argentina.">
+<title>1149 — Servicios tecnológicos: redes, servidores, cámaras y desarrollo | Rojas, Buenos Aires</title>
+<meta name="description" content="Infraestructura gestionada, redes, seguridad electrónica y herramientas a medida sobre tu sistema de gestión. Base en Rojas, atención remota a toda Argentina.">
+<link rel="canonical" href="https://www.1149.com.ar/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="1149 — Servicios tecnológicos">
+<meta property="og:description" content="Redes, servidores, cámaras y desarrollo a medida para empresas. Precio definido antes de empezar.">
+<meta property="og:url" content="https://www.1149.com.ar/">
+<meta property="og:image" content="https://www.1149.com.ar/og-1149.png">
+<meta property="og:locale" content="es_AR">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "1149",
+  "description": "Servicios tecnológicos para empresas: redes, servidores, virtualización, seguridad electrónica y desarrollo a medida.",
+  "url": "https://www.1149.com.ar",
+  "email": "help@1149.com.ar",
+  "telephone": "+54-9-2475-400420",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Rojas",
+    "addressRegion": "Buenos Aires",
+    "addressCountry": "AR"
+  },
+  "areaServed": "Argentina",
+  "sameAs": ["https://www.linkedin.com/in/1149labs/"]
+}
+</script>
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%230c0e12"/><text x="30" y="43" font-family="Arial,sans-serif" font-size="24" font-weight="900" fill="%23ffffff" text-anchor="middle" letter-spacing="-2">1149</text><rect x="52" y="36" width="7" height="9" fill="%234fd18b"/></svg>'>
 <style>
   :root{
@@ -37,7 +64,9 @@
   nav ul a{color:var(--dim);font-size:.9rem}
   nav ul a:hover{color:var(--fg);text-decoration:none}
 
-  .hero{padding:110px 0 90px;border-bottom:1px solid var(--line)}
+  .hero{padding:56px 0 52px;border-bottom:1px solid var(--line)}
+  .franja{display:flex;gap:26px;flex-wrap:wrap;margin-top:30px;font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+  .franja span::before{content:"● ";color:var(--accent)}
   .hero .wrap{display:grid;grid-template-columns:1fr 360px;gap:56px;align-items:center}
   .hero-viz svg{width:100%;height:auto;display:block}
   .viz-status{font-family:var(--mono);font-size:.72rem;color:var(--dim);margin-top:12px;min-height:1.2em}
@@ -72,7 +101,7 @@
   .hero .cta{display:inline-block;margin-top:36px;font-family:var(--mono);font-size:.95rem;border:1px solid var(--accent);padding:12px 26px;border-radius:4px}
   .hero .cta:hover{background:var(--accent);color:var(--bg);text-decoration:none}
 
-  section{padding:80px 0;border-bottom:1px solid var(--line)}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
   h2{font-size:1.5rem;margin-bottom:8px}
   .sec-tag{font-family:var(--mono);color:var(--accent);font-size:.8rem;margin-bottom:10px;display:block}
   .sec-intro{color:var(--dim);max-width:640px;margin-bottom:44px}
@@ -88,6 +117,8 @@
   .filtro li{padding:16px 0;border-bottom:1px solid var(--line);color:var(--dim)}
   .filtro li:last-child{border-bottom:none}
   .filtro li strong{color:var(--fg);display:block;margin-bottom:2px;font-weight:600}
+  .filtro li strong::before{content:"→ ";color:var(--accent);font-family:var(--mono)}
+  .card h3{border-left:3px solid var(--accent);padding-left:10px}
 
   .capas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
   .capa{border-left:2px solid var(--accent);padding:4px 0 4px 18px}
@@ -116,8 +147,8 @@
 
   @media(max-width:600px){
     nav ul{gap:16px}
-    .hero{padding:70px 0 60px}
-    section{padding:56px 0}
+    .hero{padding:44px 0 40px}
+    section{padding:48px 0}
   }
 </style>
 </head>
@@ -152,6 +183,11 @@
         <h1>Sistemas que funcionan cuando nadie los está mirando.</h1>
         <p>1149 es una empresa de servicios tecnológicos: infraestructura, conectividad, seguridad electrónica y desarrollo a medida. Trabajamos con empresas de todo el país.</p>
         <a class="cta" href="#contacto">escribinos →</a>
+        <div class="franja">
+          <span>monitoreo 24/7</span>
+          <span>respuesta en el día</span>
+          <span>remoto a todo el país</span>
+        </div>
       </div>
       <div class="hero-viz" aria-hidden="true">
         <svg id="rack" viewBox="0 0 400 360" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -203,7 +239,7 @@
         <li><strong>Remoto.</strong> Trabajamos con empresas de todo el país. Para tocar equipos vamos en persona, dentro de nuestra zona.</li>
         <li><strong>Precio cerrado.</strong> Sabés cuánto vas a pagar antes de empezar, sea un abono, una instalación o una consultoría. Las urgencias se atienden a clientes con abono.</li>
         <li><strong>La documentación es tuya.</strong> Usuarios, contraseñas, configuraciones: todo por escrito y a tu nombre. El día que quieras cambiar de proveedor, te llevás todo.</li>
-        <li><strong>Los equipos los elegimos nosotros.</strong> Según el problema y el presupuesto sale la marca y el modelo. No tenemos stock propio para colocar.</li>
+        <li><strong>Hardware con criterio.</strong> Recomendamos los equipos según el problema y el presupuesto. No trabajamos atados a ninguna marca ni vendemos stock propio.</li>
         <li><strong>Un solo responsable.</strong> Impresión 3D, cableado, obra: lo resolvemos con gente de confianza, pero la responsabilidad frente a vos es nuestra.</li>
         <li><strong>Sin vueltas.</strong> Si lo que pensás comprar no te sirve, te lo decimos antes de que gastes.</li>
       </ul>
