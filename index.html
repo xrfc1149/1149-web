@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+     1149 — RFC 1149 compliant.
+     A Standard for the Transmission of IP Datagrams on Avian Carriers (1990).
+     High latency, zero packet loss. Transmitiendo desde antes que hubiera señal.
+-->
 <html lang="es-AR">
 <head>
 <meta charset="UTF-8">
@@ -244,11 +249,12 @@
       <span class="sec-tag">04 / contacto</span>
       <h2>Contacto</h2>
       <p class="sec-intro">Contanos qué tenés instalado y qué está fallando o faltando. Con eso podemos responder algo concreto.</p>
-      <form id="f" action="https://formsubmit.co/help@1149.com.ar" method="POST">
-        <input type="hidden" name="_subject" value="Consulta desde 1149.com.ar">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://www.1149.com.ar/?enviado=1#contacto">
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <form id="f" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="9427d265-a105-4224-90dc-872042ced272">
+        <input type="hidden" name="subject" value="Consulta desde 1149.com.ar">
+        <input type="hidden" name="from_name" value="1149.com.ar">
+        <input type="hidden" name="redirect" value="https://www.1149.com.ar/?enviado=1#contacto">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <div>
           <label for="nombre">Nombre y empresa</label>
           <input id="nombre" name="nombre" required placeholder="Juan Pérez — Repuestos del Sur">
