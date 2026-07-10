@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1149 — Infraestructura y desarrollo</title>
+<meta name="description" content="Infraestructura gestionada, redes, seguridad electrónica y herramientas a medida sobre tu sistema de gestión. Remoto, toda Argentina.">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%230c0e12"/><text x="30" y="43" font-family="Arial,sans-serif" font-size="24" font-weight="900" fill="%23ffffff" text-anchor="middle" letter-spacing="-2">1149</text><rect x="52" y="36" width="7" height="9" fill="%234fd18b"/></svg>'>
+<style>
+  :root{
+    --bg:#0c0e12;
+    --bg2:#12151c;
+    --fg:#d6dae2;
+    --dim:#8a919e;
+    --line:#232833;
+    --accent:#4fd18b;
+    --mono:ui-monospace,'Cascadia Code','JetBrains Mono',Consolas,monospace;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.6;font-size:17px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+  header{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(12,14,18,.92);backdrop-filter:blur(8px);z-index:10}
+  nav{display:flex;justify-content:space-between;align-items:center;height:60px}
+  .logo{display:flex;align-items:center}
+  .logo svg{height:20px;width:auto;display:block;color:var(--fg)}
+  nav ul{display:flex;gap:28px;list-style:none}
+  nav ul a{color:var(--dim);font-size:.9rem}
+  nav ul a:hover{color:var(--fg);text-decoration:none}
+
+  .hero{padding:110px 0 90px;border-bottom:1px solid var(--line)}
+  .hero .tag{font-family:var(--mono);color:var(--accent);font-size:.85rem;margin-bottom:18px}
+  .hero h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;font-weight:700;max-width:680px}
+  .hero p{color:var(--dim);margin-top:22px;max-width:600px;font-size:1.08rem}
+  .hero .creds{font-family:var(--mono);font-size:.78rem;color:var(--dim);margin-top:26px;max-width:620px;line-height:1.8}
+  .hero .cta{display:inline-block;margin-top:36px;font-family:var(--mono);font-size:.95rem;border:1px solid var(--accent);padding:12px 26px;border-radius:4px}
+  .hero .cta:hover{background:var(--accent);color:var(--bg);text-decoration:none}
+
+  section{padding:80px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:1.5rem;margin-bottom:8px}
+  .sec-tag{font-family:var(--mono);color:var(--accent);font-size:.8rem;margin-bottom:10px;display:block}
+  .sec-intro{color:var(--dim);max-width:640px;margin-bottom:44px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:28px 24px}
+  .card h3{font-size:1.05rem;margin-bottom:12px}
+  .card .num{font-family:var(--mono);color:var(--accent);font-size:.8rem;display:block;margin-bottom:14px}
+  .card p{color:var(--dim);font-size:.94rem}
+  .card .modo{margin-top:16px;font-family:var(--mono);font-size:.78rem;color:var(--fg);border-top:1px solid var(--line);padding-top:12px}
+
+  .filtro ul{list-style:none;max-width:680px}
+  .filtro li{padding:16px 0;border-bottom:1px solid var(--line);color:var(--dim)}
+  .filtro li:last-child{border-bottom:none}
+  .filtro li strong{color:var(--fg);display:block;margin-bottom:2px;font-weight:600}
+
+  .capas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+  .capa{border-left:2px solid var(--accent);padding:4px 0 4px 18px}
+  .capa h3{font-family:var(--mono);font-size:.85rem;margin-bottom:8px;letter-spacing:.05em}
+  .capa p{color:var(--dim);font-size:.9rem}
+
+  form{max-width:560px;display:grid;gap:16px}
+  label{font-size:.85rem;color:var(--dim);display:block;margin-bottom:6px}
+  input,textarea,select{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:4px;padding:12px 14px;color:var(--fg);font-family:var(--sans);font-size:.95rem}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+  textarea{resize:vertical;min-height:120px}
+  button{font-family:var(--mono);background:var(--accent);color:var(--bg);border:none;padding:14px;border-radius:4px;font-size:.95rem;font-weight:700;cursor:pointer}
+  button:hover{opacity:.88}
+  .contact-note{color:var(--dim);font-size:.85rem;margin-top:6px}
+
+  footer{padding:40px 0;color:var(--dim);font-size:.85rem}
+
+  @media(max-width:600px){
+    nav ul{gap:16px}
+    .hero{padding:70px 0 60px}
+    section{padding:56px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#" aria-label="1149">
+        <svg viewBox="0 0 244 80" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img">
+          <path d="M2 22 L30 2 H32 V80 H12 V26 L2 32 Z"/>
+          <path d="M42 22 L70 2 H72 V80 H52 V26 L42 32 Z"/>
+          <path fill-rule="evenodd" d="M104 0 H140 V80 H120 V66 H84 V50 L104 0 Z M120 10 V50 H104 Z"/>
+          <path fill-rule="evenodd" d="M166 0 H198 Q212 0 212 14 V62 Q212 80 194 80 H152 V62 H190 Q192 62 192 60 V56 H166 Q152 56 152 42 V14 Q152 0 166 0 Z M172 16 H192 V40 H172 Z"/>
+          <rect x="224" y="56" width="20" height="24" fill="var(--accent,#4fd18b)"/>
+        </svg>
+      </a>
+      <ul>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#como">Sobre nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div class="tag">// infraestructura &amp; desarrollo</div>
+      <h1>Sistemas que funcionan cuando nadie los está mirando.</h1>
+      <p>1149 es una empresa de servicios tecnológicos: infraestructura, conectividad, seguridad electrónica y desarrollo a medida. Trabajamos con empresas de todo el país.</p>
+      <div class="creds">más de diez años en redes e infraestructura · cientos de equipos en producción</div>
+      <a class="cta" href="#contacto">escribinos →</a>
+    </div>
+  </div>
+
+  <section id="servicios">
+    <div class="wrap">
+      <span class="sec-tag">01 / servicios</span>
+      <h2>Qué hacemos</h2>
+      <p class="sec-intro">Esto es lo que hacemos. Si lo tuyo no entra acá, seguramente no seamos nosotros.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="num">[SOFTWARE]</span>
+          <h3>Herramientas sobre tu sistema de gestión</h3>
+          <p>Si en tu empresa hay una planilla que alguien completa a mano todos los días porque "el sistema no lo hace", eso se programa. Nos conectamos a tu sistema de gestión y armamos lo que falta: pantallas de carga rápida, paneles, reportes, avisos automáticos.</p>
+          <div class="modo">→ proyecto + abono de evolución</div>
+        </div>
+        <div class="card">
+          <span class="num">[INFRA]</span>
+          <h3>Infraestructura gestionada</h3>
+          <p>Redes, enlaces, servidores, cámaras, backups y monitoreo. Con abono mensual nos hacemos cargo de que todo siga andando y nos enteramos de los problemas antes que vos. También hacemos proyectos llave en mano, entregados funcionando y documentados, y consultoría para decidir inversiones en tecnología.</p>
+          <div class="modo">→ abono mensual, llave en mano o consultoría</div>
+        </div>
+        <div class="card">
+          <span class="num">[PROYECTOS]</span>
+          <h3>Proyectos puntuales</h3>
+          <p>Trabajos con principio y fin: migrar un servidor, rehacer una red que creció a los parches, instalar cámaras, conectar dos puntos que hoy no se hablan. Presupuesto cerrado antes de empezar, documentación al terminar.</p>
+          <div class="modo">→ presupuesto cerrado</div>
+        </div>
+        <div class="card">
+          <span class="num">[CONSULTORÍA]</span>
+          <h3>Consultoría de hardware</h3>
+          <p>El equipo más caro no siempre es el que hace falta. Revisamos lo que tenés, lo que viene creciendo y el presupuesto, y te recomendamos qué comprar, qué reutilizar y qué dejar afuera. Como no vendemos equipos, la recomendación viene sin conflicto de interés.</p>
+          <div class="modo">→ informe con recomendación concreta</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="como" class="filtro">
+    <div class="wrap">
+      <span class="sec-tag">02 / sobre nosotros</span>
+      <h2>Sobre nosotros</h2>
+      <p class="sec-intro">Venimos del mundo de los proveedores de internet: más de diez años poniendo antenas, armando redes y atendiendo el teléfono cuando algo se caía. Con el tiempo se sumaron los servidores, la virtualización, las cámaras y el desarrollo. 1149 es todo eso junto, trabajando con algunas reglas fijas:</p>
+      <ul>
+        <li><strong>Remoto.</strong> Trabajamos con empresas de todo el país. Para tocar equipos vamos en persona, dentro de nuestra zona.</li>
+        <li><strong>Precio cerrado.</strong> Sabés cuánto vas a pagar antes de empezar, sea un abono, una instalación o una consultoría. Las urgencias se atienden a clientes con abono.</li>
+        <li><strong>La documentación es tuya.</strong> Usuarios, contraseñas, configuraciones: todo por escrito y a tu nombre. El día que quieras cambiar de proveedor, te llevás todo.</li>
+        <li><strong>Los equipos los elegimos nosotros.</strong> Según el problema y el presupuesto sale la marca y el modelo. No tenemos stock propio para colocar.</li>
+        <li><strong>Un solo responsable.</strong> Impresión 3D, cableado, obra: lo resolvemos con gente de confianza, pero la responsabilidad frente a vos es nuestra.</li>
+        <li><strong>Sin vueltas.</strong> Si lo que pensás comprar no te sirve, te lo decimos antes de que gastes.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="cobertura">
+    <div class="wrap">
+      <span class="sec-tag">03 / cobertura</span>
+      <h2>Qué cubrimos</h2>
+      <p class="sec-intro">Cuando la red falla, lo típico es que cada proveedor culpe al otro. Acá eso no pasa: cubrimos todo, y el problema es nuestro hasta que queda resuelto.</p>
+      <div class="capas">
+        <div class="capa">
+          <h3>CONECTIVIDAD</h3>
+          <p>Enlaces punto a punto, ruteo, wifi para depósitos y plantas, redes entre sucursales.</p>
+        </div>
+        <div class="capa">
+          <h3>CÓMPUTO</h3>
+          <p>Servidores físicos y virtuales, contenedores. Del hardware al sistema operativo.</p>
+        </div>
+        <div class="capa">
+          <h3>SEGURIDAD</h3>
+          <p>Cámaras, alarmas, control de acceso. Instalación e integración con el resto.</p>
+        </div>
+        <div class="capa">
+          <h3>IoT &amp; HARDWARE</h3>
+          <p>Sensores y electrónica aplicada: medir temperatura, contar piezas, avisar cuando algo se sale de rango.</p>
+        </div>
+        <div class="capa">
+          <h3>CONTINUIDAD</h3>
+          <p>Backups con restauración probada. Monitoreo y alertas las 24 horas.</p>
+        </div>
+        <div class="capa">
+          <h3>INTEGRACIÓN</h3>
+          <p>Que los datos pasen solos de un sistema a otro, sin que nadie los tipee dos veces.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="wrap">
+      <span class="sec-tag">04 / contacto</span>
+      <h2>Contacto</h2>
+      <p class="sec-intro">Contanos qué tenés instalado y qué está fallando o faltando. Con eso podemos responder algo concreto.</p>
+      <form id="f" action="https://formsubmit.co/admin@1149.com.ar" method="POST">
+        <input type="hidden" name="_subject" value="Consulta desde 1149.com.ar">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://www.1149.com.ar/?enviado=1#contacto">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <div>
+          <label for="nombre">Nombre y empresa</label>
+          <input id="nombre" name="nombre" required placeholder="Juan Pérez — Repuestos del Sur">
+        </div>
+        <div>
+          <label for="email">Tu correo</label>
+          <input id="email" name="email" type="email" required placeholder="nombre@tuempresa.com.ar">
+        </div>
+        <div>
+          <label for="tema">Tema</label>
+          <select id="tema" name="tema" required>
+            <option value="" disabled selected>Elegí una opción</option>
+            <option>Herramientas sobre mi sistema de gestión</option>
+            <option>Infraestructura gestionada (abono)</option>
+            <option>Cámaras / seguridad electrónica</option>
+            <option>Enlaces / conectividad</option>
+            <option>Proyecto puntual</option>
+            <option>Consultoría</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div>
+          <label for="actual">¿Qué tenés hoy?</label>
+          <input id="actual" name="situacion_actual" required placeholder="Ej: un ERP en la nube, dos sucursales conectadas, un server que nadie quiere tocar…">
+        </div>
+        <div>
+          <label for="msg">¿Qué necesitás resolver?</label>
+          <textarea id="msg" name="mensaje" required placeholder="El problema concreto: qué falla, qué proceso te come tiempo, qué querés que exista y no existe."></textarea>
+        </div>
+        <button type="submit">enviar →</button>
+        <p class="contact-note">El mensaje llega directo a nuestro correo. Si preferís, escribinos a <a href="mailto:admin@1149.com.ar">admin@1149.com.ar</a>.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <span style="font-family:var(--mono)">1149 — Argentina</span>
+    <span><a href="mailto:admin@1149.com.ar">admin@1149.com.ar</a></span>
+  </div>
+</footer>
+
+<script>
+if (new URLSearchParams(location.search).has('enviado')) {
+  const f = document.getElementById('f');
+  f.innerHTML = '<p style="color:var(--fg)">Mensaje enviado. Te respondemos a la brevedad.</p>';
+}
+</script>
+
+</body>
+</html>
