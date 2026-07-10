@@ -51,6 +51,12 @@
   .led.rojo{fill:#b04a4a;animation:none}
   .led.apagado{fill:#242a36;animation:none}
   @keyframes parp{0%,55%{opacity:1}56%,100%{opacity:.12}}
+  .nedry{opacity:0;pointer-events:none;transition:opacity .4s}
+  .nedry.visible{opacity:1}
+  .nedry text{font-family:var(--mono)}
+  .nedry .dedo{transform-box:fill-box;transform-origin:95% 100%}
+  .nedry.visible .dedo{animation:dedo .45s ease-in-out infinite}
+  @keyframes dedo{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(12deg)}}
   @media(max-width:900px){
     .hero .wrap{grid-template-columns:1fr}
     .hero-viz{display:none}
@@ -344,33 +350,99 @@ if (new URLSearchParams(location.search).has('enviado')) {
 
   const activos = () => servidores.filter(s => !s.caido);
 
+  // nedry, dibujado en casa
+  const nedry = document.createElementNS(ns,'g');
+  nedry.setAttribute('class','nedry');
+  nedry.setAttribute('transform','translate(150,118)');
+  nedry.innerHTML =
+    '<rect x="-58" y="-64" width="216" height="36" rx="6" fill="#f0f0f0"/>' +
+    '<path d="M40 -28 L50 -18 L56 -28 Z" fill="#f0f0f0"/>' +
+    '<text x="50" y="-50" text-anchor="middle" font-size="10" fill="#16181d">ah ah ah…</text>' +
+    '<text x="50" y="-37" text-anchor="middle" font-size="9" fill="#16181d">you didn\'t say the magic word</text>' +
+    '<path d="M12 96 Q14 58 34 52 L66 52 Q86 58 88 96 Z" fill="#d24a3a"/>' +
+    '<path d="M40 52 L50 62 L60 52 L54 50 L46 50 Z" fill="#f2e9c8"/>' +
+    '<line x1="50" y1="62" x2="50" y2="96" stroke="#a83428" stroke-width="2" stroke-dasharray="3 4"/>' +
+    '<g fill="#f2e9c8">' +
+      '<circle cx="28" cy="70" r="1.8"/><circle cx="32" cy="67" r="1.8"/><circle cx="32" cy="73" r="1.8"/><circle cx="36" cy="70" r="1.8"/><circle cx="32" cy="70" r="1.2" fill="#d24a3a"/>' +
+      '<circle cx="62" cy="80" r="1.8"/><circle cx="66" cy="77" r="1.8"/><circle cx="66" cy="83" r="1.8"/><circle cx="70" cy="80" r="1.8"/><circle cx="66" cy="80" r="1.2" fill="#d24a3a"/>' +
+      '<circle cx="38" cy="86" r="1.8"/><circle cx="42" cy="83" r="1.8"/><circle cx="42" cy="89" r="1.8"/><circle cx="46" cy="86" r="1.8"/><circle cx="42" cy="86" r="1.2" fill="#d24a3a"/>' +
+    '</g>' +
+    '<rect x="40" y="46" width="20" height="10" fill="#dfae7f"/>' +
+    '<ellipse cx="50" cy="28" rx="24" ry="22" fill="#eabf92"/>' +
+    '<path d="M32 44 Q50 56 68 44 Q60 54 50 54 Q40 54 32 44 Z" fill="#e0b183"/>' +
+    '<circle cx="26" cy="30" r="4" fill="#eabf92"/>' +
+    '<circle cx="74" cy="30" r="4" fill="#eabf92"/>' +
+    '<path d="M26 22 Q26 4 50 2 Q74 4 74 22 Q71 10 64 13 Q60 5 52 11 Q44 5 38 13 Q31 10 28 18 Q27 20 26 22 Z" fill="#5b4630"/>' +
+    '<line x1="35" y1="19" x2="46" y2="18" stroke="#3d2f20" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<line x1="55" y1="18" x2="66" y2="19" stroke="#3d2f20" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<circle cx="41" cy="27" r="6.5" fill="rgba(255,255,255,.08)" stroke="#2b2b2b" stroke-width="1.8"/>' +
+    '<circle cx="60" cy="27" r="6.5" fill="rgba(255,255,255,.08)" stroke="#2b2b2b" stroke-width="1.8"/>' +
+    '<line x1="47.5" y1="27" x2="53.5" y2="27" stroke="#2b2b2b" stroke-width="1.8"/>' +
+    '<line x1="34.5" y1="27" x2="27" y2="29" stroke="#2b2b2b" stroke-width="1.5"/>' +
+    '<line x1="66.5" y1="27" x2="73" y2="29" stroke="#2b2b2b" stroke-width="1.5"/>' +
+    '<circle cx="42" cy="28" r="1.8" fill="#1a1a1a"/>' +
+    '<circle cx="59" cy="28" r="1.8" fill="#1a1a1a"/>' +
+    '<path d="M50 30 Q53 36 49 39" stroke="#c99a6d" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+    '<path d="M38 43 Q50 51 64 41 Q53 49 38 43 Z" fill="#8a4234"/>' +
+    '<line x1="76" y1="60" x2="92" y2="44" stroke="#d24a3a" stroke-width="10" stroke-linecap="round"/>' +
+    '<g class="dedo">' +
+      '<line x1="92" y1="44" x2="88" y2="22" stroke="#eabf92" stroke-width="8" stroke-linecap="round"/>' +
+      '<circle cx="88" cy="19" r="5.5" fill="#eabf92"/>' +
+      '<line x1="88" y1="16" x2="90" y2="6" stroke="#eabf92" stroke-width="3.6" stroke-linecap="round"/>' +
+    '</g>';
+  svg.appendChild(nedry);
+
+  let apocalipsis = false;
+
+  function nedryShow(){
+    apocalipsis = true;
+    limpiarAvisos();
+    servidores.forEach(s => { clearTimeout(s.timer); s.g.querySelector('.act').classList.remove('rapido'); });
+    nedry.classList.add('visible');
+    status.innerHTML = '<span class="warn">● pérdida total del clúster</span> — "you didn\'t say the magic word"';
+    setTimeout(() => {
+      nedry.classList.remove('visible');
+      servidores.forEach(s => {
+        s.caido = false; s.ocupado = false;
+        s.g.classList.remove('caido');
+        s.g.querySelector('.poder').classList.remove('rojo');
+        s.g.querySelector('.act').classList.remove('apagado');
+      });
+      apocalipsis = false;
+      status.innerHTML = '<span class="ok">● restauración completa</span> — para eso están los backups';
+      decir(DEFECTO, 3000);
+    }, 5200);
+  }
+
   servidores.forEach((s, i) => {
     s.g.addEventListener('click', () => {
-      if (s.caido || s.ocupado) return;
-      if (activos().length <= 2) {
-        limpiarAvisos();
-        status.innerHTML = '<span class="warn">● capacidad mínima del clúster</span> — pedido rechazado';
-        decir(DEFECTO, 2200);
-        return;
-      }
+      if (s.caido || s.ocupado || apocalipsis) return;
       s.caido = true; s.ocupado = true;
       s.g.classList.add('caido');
       s.g.querySelector('.poder').classList.add('rojo');
       s.g.querySelector('.act').classList.add('apagado');
 
-      const receptor = azar(activos());
+      const restantes = activos();
+      const nombre = 'srv-0'+(i+1);
+
+      if (restantes.length === 0) { nedryShow(); return; }
+
+      const receptor = azar(restantes);
       const ledR = receptor.g.querySelector('.act');
       ledR.classList.add('rapido');
-      const nombre = 'srv-0'+(i+1);
       const nombreR = 'srv-0'+(servidores.indexOf(receptor)+1);
 
       limpiarAvisos();
-      status.innerHTML = '<span class="warn">● '+nombre+' fuera de línea</span> — migrando servicios…';
-      decir('<span class="ok">● servicios migrados a '+nombreR+'</span> — sin corte percibido', 1100);
+      if (restantes.length === 1) {
+        status.innerHTML = '<span class="warn">● '+nombre+' fuera de línea</span> — queda un solo nodo, ni se te ocurra';
+      } else {
+        status.innerHTML = '<span class="warn">● '+nombre+' fuera de línea</span> — migrando servicios…';
+        decir('<span class="ok">● servicios migrados a '+nombreR+'</span> — sin corte percibido', 1100);
+      }
       decir('<span class="ok">● '+nombre+' reincorporado</span> — carga rebalanceada', 4600);
       decir(DEFECTO, 7000);
 
-      setTimeout(() => {
+      s.timer = setTimeout(() => {
         s.caido = false; s.ocupado = false;
         s.g.classList.remove('caido');
         s.g.querySelector('.poder').classList.remove('rojo');
